@@ -91,7 +91,7 @@ class Subsonic:
 
 
 def dump_json(data):
-    json.dump(data, sys.stdout, sort_keys=True, indent=4)
+    json.dump(data, sys.stdout, sort_keys=True, indent=2)
     sys.stdout.write('\n')
 
 
