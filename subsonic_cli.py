@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-from pprint import pprint
 import argparse
 import configparser
 import hashlib
+import json
+import os
 import random
 import sys
 
@@ -53,7 +54,7 @@ class Subsonic:
         response = requests.get(url, params=parameters)
         response_body = response.json()
         if 'error' in response_body:
-            pprint(response_body)
+            dump_json(response_body)
             raise SubsonicError(
                 '{} - {}'.format(
                     response_body['error'],
@@ -63,7 +64,7 @@ class Subsonic:
         response_body = response_body['subsonic-response']
         response_body.pop('version')
         if response_body.pop('status') != 'ok':
-            pprint(response.json())
+            dump_json(response.json())
             raise NotImplementedError
         elif len(response_body) == 1:
             return response_body.popitem()[1]
@@ -89,6 +90,11 @@ class Subsonic:
         return salt, token
 
 
+def dump_json(data):
+    json.dump(data, sys.stdout, sort_keys=True, indent=4)
+    sys.stdout.write('\n')
+
+
 def read_config(path):
     config = configparser.ConfigParser()
     config.read(path)
@@ -111,13 +117,21 @@ def main():
                         help='Parameter to include when making the requst')
     args = parser.parse_args()
 
-    config = read_config(args.config)
+    if args.config:
+        config = read_config(args.config)
+    else:
+        config = {
+            'username': os.environ['SUBSONIC_USERNAME'],
+            'password': os.environ['SUBSONIC_PASSWORD'],
+            'url': os.environ['SUBSONIC_URL']
+        }
+
     subsonic = Subsonic(**config)
     response = subsonic.request(
         args.method,
         {p[0]: p[1] for p in args.parameter}
     )
-    pprint(response)
+    dump_json(response)
 
 
 if __name__ == '__main__':
