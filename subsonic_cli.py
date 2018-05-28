@@ -61,15 +61,19 @@ class Subsonic:
                     response_body['message']
                 )
             )
-        response_body = response_body['subsonic-response']
-        response_body.pop('version')
-        if response_body.pop('status') != 'ok':
+        return response_body
+
+    @staticmethod
+    def format_response_body(body):
+        body = body['subsonic-response']
+        body.pop('version')
+        if body.pop('status') != 'ok':
             dump_json(response.json())
             raise NotImplementedError
-        elif len(response_body) == 1:
-            return response_body.popitem()[1]
+        elif len(body) == 1:
+            return body.popitem()[1]
         else:
-            return response_body
+            return body
 
     def get_default_params(self, username, password):
         salt, token = self.get_salt_and_token(password)
@@ -115,6 +119,8 @@ def main():
     parser.add_argument('-p', '--parameter', nargs=2, action='append',
                         default=[],
                         help='Parameter to include when making the requst')
+    parser.add_argument('-f', '--full-response', action='store_const',
+                        const=True)
     args = parser.parse_args()
 
     if args.config:
@@ -131,6 +137,8 @@ def main():
         args.method,
         {p[0]: p[1] for p in args.parameter}
     )
+    if not args.full_response:
+        response = subsonic.format_response_body(response)
     dump_json(response)
 
 
