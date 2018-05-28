@@ -66,11 +66,11 @@ class Subsonic:
     @staticmethod
     def format_response_body(body):
         body = body['subsonic-response']
-        body.pop('version')
         if body.pop('status') != 'ok':
-            dump_json(response.json())
+            dump_json(body)
             raise NotImplementedError
-        elif len(body) == 1:
+        body.pop('version')
+        if len(body) == 1:
             return body.popitem()[1]
         else:
             return body
