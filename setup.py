@@ -11,5 +11,10 @@ setuptools.setup(
     install_requires=['requests'],
     entry_points={
         'console_scripts': ['subsonic-cli=subsonic_cli:main']
-    }
+    },
+    url='https://gitlab.com/nvllsvm/subsonic-cli',
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Programming Language :: Python :: 3 :: Only'
+    ]
 )
