@@ -3,7 +3,6 @@ import argparse
 import configparser
 import hashlib
 import json
-import os
 import random
 import sys
 
@@ -102,7 +101,7 @@ def dump_json(data):
 def read_config(path):
     config = configparser.ConfigParser()
     config.read(path)
-    config = config['subsonic']
+    config = config['subsonic-cli']
     return {
         'username': config['username'],
         'password': config['password'],
@@ -114,7 +113,7 @@ def main():
     parser = argparse.ArgumentParser(
         description='Subsonic API command line interface'
     )
-    parser.add_argument('-c', '--config', help='Config file')
+    parser.add_argument('-c', '--config', help='Config file', required=True)
     parser.add_argument('method', help='Subsonic method to invoke')
     parser.add_argument('-p', '--parameter', nargs=2, action='append',
                         default=[],
@@ -123,14 +122,7 @@ def main():
                         const=True)
     args = parser.parse_args()
 
-    if args.config:
-        config = read_config(args.config)
-    else:
-        config = {
-            'username': os.environ['SUBSONIC_USERNAME'],
-            'password': os.environ['SUBSONIC_PASSWORD'],
-            'url': os.environ['SUBSONIC_URL']
-        }
+    config = read_config(args.config)
 
     subsonic = Subsonic(**config)
     response = subsonic.request(
