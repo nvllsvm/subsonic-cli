@@ -118,8 +118,7 @@ def main():
     parser.add_argument('-p', '--parameter', nargs=2, action='append',
                         default=[],
                         help='Parameter to include when making the requst')
-    parser.add_argument('-f', '--full-response', action='store_const',
-                        const=True)
+    parser.add_argument('-f', '--full-response', action='store_true')
     args = parser.parse_args()
 
     config = read_config(args.config)
