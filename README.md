@@ -26,15 +26,6 @@ $ subsonic -c your_config.conf startScan
 }
 ```
 
-### Streaming Audio
-```
-$ subsonic -c your_config.conf startScan
-{
-  "count": 18786,
-  "scanning": true
-}
-```
-
 ### Retrieving Top Songs
 ```
 $ subsonic -c config.cfg getTopSongs -p Autodafeh
