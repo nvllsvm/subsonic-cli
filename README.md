@@ -19,7 +19,7 @@ password = YOUR_PASSWORD
 
 ### Library Scanning
 ```
-$ subsonic -c your_config.conf startScan
+$ subsonic-cli -c your_config.conf startScan
 {
   "count": 18786,
   "scanning": true
@@ -28,7 +28,7 @@ $ subsonic -c your_config.conf startScan
 
 ### Retrieving Top Songs
 ```
-$ subsonic -c config.cfg getTopSongs -p Autodafeh
+$ subsonic-cli -c config.cfg getTopSongs -p artist Autodafeh
 {
   "song": [
     {
@@ -62,5 +62,5 @@ $ subsonic -c config.cfg getTopSongs -p Autodafeh
 ### Streaming Music to MPV
 The `id` parameter value was retrieved in the *Retrieving Top Songs* example.
 ```
-$ subsonic -c config.cfg stream -p id 34960 | mpv -
+$ subsonic-cli -c config.cfg stream -p id 34960 | mpv -
 ```
