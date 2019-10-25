@@ -8,7 +8,6 @@ setuptools.setup(
     author_email='ar@nullsum.net',
     license='MIT',
     py_modules=['subsonic_cli'],
-    install_requires=['requests'],
     entry_points={
         'console_scripts': ['subsonic-cli=subsonic_cli:main']
     },
