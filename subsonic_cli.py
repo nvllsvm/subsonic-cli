@@ -10,6 +10,8 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
+__version__ = '0.2.1'
+
 
 class SubsonicError(Exception):
     """Subsonic API error occured"""
@@ -126,6 +128,7 @@ def main():
                         default=[],
                         help='Parameter to include when making the requst')
     parser.add_argument('-f', '--full-response', action='store_true')
+    parser.add_argument('--version', action='version', version=__version__)
     args = parser.parse_args()
 
     config = read_config(args.config)

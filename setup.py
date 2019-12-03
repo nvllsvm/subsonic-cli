@@ -1,9 +1,11 @@
 import setuptools
 
+import subsonic_cli
+
 
 setuptools.setup(
     name='subsonic-cli',
-    version='0.2.1',
+    version=subsonic_cli.__version__,
     author='Andrew Rabert',
     author_email='ar@nullsum.net',
     license='MIT',
