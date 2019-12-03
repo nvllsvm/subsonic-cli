@@ -3,7 +3,7 @@ import setuptools
 
 setuptools.setup(
     name='subsonic-cli',
-    version='0.2.0',
+    version='0.2.1',
     author='Andrew Rabert',
     author_email='ar@nullsum.net',
     license='MIT',
